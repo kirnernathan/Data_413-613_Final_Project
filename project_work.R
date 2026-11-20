@@ -102,24 +102,20 @@ combined_risk_factors_categorical <- combined_risk_factors %>%
 
 head(combined_risk_factors_categorical)
 
-valid <- list(
-  race_eth              = 1:6,
-  first_degree_hx       = 0:1,
-  age_menarche          = 0:2,
-  age_first_birth       = 0:4,
-  BIRADS_breast_density = 1:4,
-  current_hrt           = 0:1,
-  menopaus              = 1:3,
-  bmi_group             = 1:4,
-  biophx                = 0:1,
-  breast_cancer_history = 0:1
-)
-
-combined_risk_factors_cleaned <- combined_risk_factors %>%
-  mutate(across(
-    all_of(names(valid)),
-    ~ if_else(.x %in% valid[[cur_column()]], as.character(.x), NA_character_)
-  ))
+combined_risk_factors_cleaned<- combined_risk_factors %>%
+  mutate(
+    race_eth = if_else(race_eth %in% (1:6), race_eth, NA),
+    first_degree_hx = if_else(first_degree_hx %in% (0:1), first_degree_hx, NA),
+    age_menarche=if_else(age_menarche %in% (0:2), age_menarche, NA),
+    age_first_birth=if_else(age_first_birth %in% (0:4), age_first_birth, NA),
+    BIRADS_breast_density=if_else(BIRADS_breast_density %in% (1:4), BIRADS_breast_density, NA),
+    current_hrt=if_else(current_hrt %in% (0:1),current_hrt, NA),
+    menopaus=if_else(menopaus %in% (1:3), menopaus, NA),
+    bmi_group=if_else(bmi_group %in% (1:4),bmi_group, NA),
+    biophx=if_else(biophx %in% (0:1), biophx, NA),
+    breast_cancer_history=if_else(breast_cancer_history %in% (0:1), breast_cancer_history, NA)
+    
+  )
 colSums(is.na(combined_risk_factors_cleaned))
 lm_face <- lm(biophx ~ race_eth, data = combined_risk_factors_cleaned)
 summary(lm_face)
