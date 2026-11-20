@@ -101,3 +101,29 @@ combined_risk_factors_categorical <- combined_risk_factors %>%
   )
 
 head(combined_risk_factors_categorical)
+
+valid <- list(
+  race_eth              = 1:6,
+  first_degree_hx       = 0:1,
+  age_menarche          = 0:2,
+  age_first_birth       = 0:4,
+  BIRADS_breast_density = 1:4,
+  current_hrt           = 0:1,
+  menopaus              = 1:3,
+  bmi_group             = 1:4,
+  biophx                = 0:1,
+  breast_cancer_history = 0:1
+)
+
+combined_risk_factors_cleaned <- combined_risk_factors %>%
+  mutate(across(
+    all_of(names(valid)),
+    ~ if_else(.x %in% valid[[cur_column()]], as.character(.x), NA_character_)
+  ))
+colSums(is.na(combined_risk_factors_cleaned))
+lm_face <- lm(biophx ~ race_eth, data = combined_risk_factors_cleaned)
+summary(lm_face)
+library(stargazer)
+lpm_model_no_controls <- lm(biophx ~ race_eth, data = combined_risk_factors_cleaned)
+lpm_model_no_controls 
+
