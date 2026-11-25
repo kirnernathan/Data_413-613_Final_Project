@@ -97,7 +97,7 @@ combined_risk_factors_categorical <- combined_risk_factors %>%
   select(age_group,race_ethnicity,first_degree_history, age_at_menarche,
          age_at_first_birth,BI_RADS_breast_density,use_of_hormone_therapy,
          menopaus_status, bmi_range, previous_biopsy_or_aspiration, 
-         history_of_breast_cancer
+         history_of_breast_cancer, count
   )
 
 head(combined_risk_factors_categorical)
@@ -113,7 +113,8 @@ combined_risk_factors_cleaned<- combined_risk_factors %>%
     menopaus=if_else(menopaus %in% (1:3), menopaus, NA),
     bmi_group=if_else(bmi_group %in% (1:4),bmi_group, NA),
     biophx=if_else(biophx %in% (0:1), biophx, NA),
-    breast_cancer_history=if_else(breast_cancer_history %in% (0:1), breast_cancer_history, NA)
+    breast_cancer_history=if_else(breast_cancer_history %in% (0:1), breast_cancer_history, NA),
+    count=count
     
   )
 colSums(is.na(combined_risk_factors_cleaned))
