@@ -7,8 +7,13 @@ ui <- fluidPage(
 server <- function(input, output) {
 }
 
-df<-combined_risk_factors_categorical
+df <- combined_risk_factors_categorical %>%
+  mutate(count = 1)
 
+cat("rows:", nrow(df), "\n")
+cat("has count column:", "count" %in% names(df), "\n")
+print(names(df))
+print(head(df))
 ui <- fluidPage(
   titlePanel("Your Risk Factors"),
   sidebarLayout(
@@ -202,3 +207,4 @@ output$pct_plot <-renderPlot({
 
 
 shinyApp(ui,server)
+
