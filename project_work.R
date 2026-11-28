@@ -8,6 +8,16 @@ risk_factors_2013_2017<-read.csv("Data_413/final_project/bcsc_risk_factors_summa
 risk_factors_2009_2013<-read.csv("Data_413/final_project/bcsc_risk_factors_summarized3_092020.csv")
 risk_factors_2005_2009<-read.csv("Data_413/final_project/bcsc_risk_factors_summarized2_092020.csv")
 
+women_screened<-read.csv("Data_413/final_project/NHANES_US_Women_Official_Variable_Names.csv")
+
+head(women_screened)
+
+comparison_data<- women_screened %>%
+  select(age_years_at_screening,race_hispanic_origin_recode_including_non_hispanic_asian, age_at_first_live_birth, 
+         age_at_first_menstrual_period.1,ever_told_had_cancer_or_malignancy,body_mass_index_kg_per_m2,ever_used_female_hormones_estrogen_or_progesterone,
+         )
+  
+
 combined_risk_factors <- rbind(risk_factors_2013_2017, risk_factors_2009_2013, risk_factors_2005_2009)
 head(combined_risk_factors)
 
